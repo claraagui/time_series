@@ -1,0 +1,58 @@
+---
+title: "Introduccion"
+author: "Clara"
+format: html
+---
+
+## pkgs
+
+ctrl/CMD + ALT + I # code
+
+```{r}
+# para correr un nuevo chunk de código:
+# CTL + SHIFT + ENTER
+# Para correr solo la línea actual:
+# CNTL + ENTER
+library(tidyverse)
+library(fpp3)
+```
+
+## turismo 
+
+```{r}
+mpg 
+tourism
+```
+```{r}
+distinct(tourism, State)
+```
+
+```{r}
+filter(tourism, State == "Victoria", Region == "Lakes")
+```
+```{r}
+# pi <- |>  "CTRL + SHIFT + M" -> luego
+summarise(group_by(as_tibble(filter(tourism, State == "Victoria", Region == "Lakes")), Purpose), media = mean(Trips))
+```
+
+```{r}
+tourism |> 
+  filter(State == "Victoria", Region == "Lakes") |> 
+  as_tibble() |> 
+  group_by(Purpose) |> 
+  summarise(media = mean(Trips))
+```
+```{r}
+tourism |> 
+  filter(State == "Victoria", Region == "Lakes") |> 
+  autoplot(Trips) + #agregando una capa adicional
+  facet_wrap(vars(Purpose), scale = "free_y") + 
+  theme(legend.position = "none")
+```
+
+```{r}
+tourism |> 
+  filter(State == "Victoria", Region == "Lakes") |> 
+  write.csv("victoria.csv")
+```
+
